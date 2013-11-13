@@ -50,7 +50,8 @@ class MongoEngine(object):
             conn_settings['replicaSet'] = conn_settings['replicaset']
             del conn_settings['replicaset']
 
-        self.connection = mongoengine.connect(**conn_settings)
+        db = conn_settings.pop('db')
+        self.connection = mongoengine.connect(db, **conn_settings)
 
         app.extensions = getattr(app, 'extensions', {})
         app.extensions['mongoengine'] = self
